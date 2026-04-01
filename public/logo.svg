@@ -1,0 +1,69 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#05080f"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#0055ff"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="60%" stop-color="#0066ff"/>
+      <stop offset="100%" stop-color="#4040ff"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+
+  <!-- Outer ring glow -->
+  <circle cx="256" cy="256" r="188" stroke="url(#g2)" stroke-width="1.5" fill="none" opacity="0.25"/>
+  <circle cx="256" cy="256" r="200" stroke="url(#g2)" stroke-width="0.75" fill="none" opacity="0.1"/>
+
+  <!-- Scan lines (horizontal) -->
+  <line x1="80" y1="200" x2="432" y2="200" stroke="#00d4ff" stroke-width="0.75" opacity="0.12"/>
+  <line x1="80" y1="256" x2="432" y2="256" stroke="#00d4ff" stroke-width="0.75" opacity="0.18"/>
+  <line x1="80" y1="312" x2="432" y2="312" stroke="#00d4ff" stroke-width="0.75" opacity="0.12"/>
+
+  <!-- Crosshair corners -->
+  <path d="M100 136 L100 100 L136 100" stroke="url(#g2)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M376 100 L412 100 L412 136" stroke="url(#g2)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M100 376 L100 412 L136 412" stroke="url(#g2)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M412 376 L412 412 L376 412" stroke="url(#g2)" stroke-width="3" fill="none" stroke-linecap="round" filter="url(#glow)"/>
+
+  <!-- Main "D" letterform — bold, modern -->
+  <path d="M168 168 L168 344 L240 344 C296 344 332 308 332 256 C332 204 296 168 240 168 Z"
+    fill="url(#g2)" filter="url(#glow2)"/>
+  <!-- D cutout -->
+  <path d="M200 200 L240 200 C272 200 296 224 296 256 C296 288 272 312 240 312 L200 312 Z"
+    fill="#05080f"/>
+
+  <!-- Center dot (scan cursor) -->
+  <circle cx="256" cy="256" r="6" fill="#00d4ff" filter="url(#glow2)" opacity="0.9"/>
+
+  <!-- Small accent dots -->
+  <circle cx="256" cy="256" r="2.5" fill="#ffffff"/>
+
+  <!-- Bottom tick marks -->
+  <line x1="216" y1="380" x2="216" y2="390" stroke="#00d4ff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="236" y1="382" x2="236" y2="390" stroke="#00d4ff" stroke-width="1.5" opacity="0.35"/>
+  <line x1="256" y1="383" x2="256" y2="392" stroke="#00d4ff" stroke-width="2" opacity="0.6"/>
+  <line x1="276" y1="382" x2="276" y2="390" stroke="#00d4ff" stroke-width="1.5" opacity="0.35"/>
+  <line x1="296" y1="380" x2="296" y2="390" stroke="#00d4ff" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Top right signal bars -->
+  <rect x="368" y="152" width="6" height="16" rx="2" fill="#00d4ff" opacity="0.3"/>
+  <rect x="378" y="144" width="6" height="24" rx="2" fill="#00d4ff" opacity="0.5"/>
+  <rect x="388" y="136" width="6" height="32" rx="2" fill="#00d4ff" opacity="0.8"/>
+  <rect x="398" y="128" width="6" height="40" rx="2" fill="#00d4ff"/>
+</svg>

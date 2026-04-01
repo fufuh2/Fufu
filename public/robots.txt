@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+Disallow: /api/
+Disallow: /_next/
+Disallow: /app?*
+
+# Sitemap
+Sitemap: https://deeptradescan.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1

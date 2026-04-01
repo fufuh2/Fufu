@@ -1,0 +1,72 @@
+services:
+  # ── Ana Web Servisi ─────────────────────────────────────────────────────────
+  - type: web
+    name: deep-analyzer-1
+    runtime: node
+    region: oregon
+    plan: starter
+    buildCommand: npm install && NODE_OPTIONS=--max-old-space-size=400 npm run build
+    startCommand: node_modules/.bin/next start -H 0.0.0.0 -p ${PORT:-3000}
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: APP_BASE_URL
+        value: https://deeptradescan.com
+      - key: CRON_SECRET
+        value: deeptradescan-cron-2024
+
+      # Supabase — Render Dashboard > deeptradescan > Environment'tan set et
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+
+      # AI Engine — Anthropic Dashboard'dan al
+      - key: ANTHROPIC_API_KEY
+        sync: false
+
+      # Telegram Bot — @deeptradescansinyaller_bot
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHANNEL
+        value: "@deeptradescan"
+
+  # ── Telegram Sinyal Cron — Her 15 Dakika ────────────────────────────────────
+  # ⚠️  Render Dashboard > deeptradescan-telegram-cron > Settings > Start Command
+  #     değerinin tam olarak şu olduğundan emin ol: node scripts/send-signals.mjs
+  - type: cron
+    name: deeptradescan-telegram-cron
+    runtime: node
+    region: oregon
+    schedule: "*/15 * * * *"
+    # npm install gerekmez; send-signals.mjs yalnızca Node.js built-in fetch kullanır
+    buildCommand: echo "no build needed"
+    startCommand: node scripts/send-signals.mjs
+    envVars:
+      # İç ağ URL'si: web servis adı render.yaml'daki "deep-analyzer-1" ile eşleşmeli.
+      # Eğer Render Dashboard'da servis farklı adla görünüyorsa
+      # https://deeptradescan.com ile değiştir.
+      - key: APP_BASE_URL
+        value: http://deep-analyzer-1:10000
+      - key: CRON_SECRET
+        value: deeptradescan-cron-2024
+
+  # ── Günlük Kota Sıfırlama — 00:00 UTC ───────────────────────────────────────
+  - type: cron
+    name: reset-daily-quotas
+    runtime: node
+    region: oregon
+    schedule: "0 0 * * *"
+    buildCommand: npm install
+    startCommand: node scripts/reset-quotas.mjs
+    envVars:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
