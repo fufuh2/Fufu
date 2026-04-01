@@ -1,0 +1,9 @@
+*.tar.gz
+node_modules/
+.next/
+out/
+.env
+.env.local
+.vercel
+.env.vercel.local
+tsconfig.tsbuildinfo
